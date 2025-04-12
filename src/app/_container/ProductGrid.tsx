@@ -1,26 +1,32 @@
 "use client";
 import { useGetProductsQuery } from '@/Redux/services/productApi';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { BsListUl } from 'react-icons/bs';
 import { LuGrid2X2 } from "react-icons/lu";
 import ProductCard from './ProductCard';
 import { Product } from '@/utils/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/Redux/app/store';
 
 const ProductGrid = () => {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [sortBy, setSortBy] = useState('relevance');
     const [itemsPerPage, setItemsPerPage] = useState('12');
+    
+    const { data: productsData } = useGetProductsQuery(undefined);
+    const selectedCategories = useSelector((state: RootState) => state.filter.selectedCategories);
 
-    const { data, isLoading, error } = useGetProductsQuery(undefined);
-    // console.log(data);
+    const filteredProducts = useMemo(() => {
+        if (!productsData?.products) return [];
+        
+        if (selectedCategories.length === 0) {
+            return productsData.products;
+        }
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error loading products</div>;
-    }
+        return productsData.products.filter(product => 
+            selectedCategories.includes(product.category)
+        );
+    }, [productsData?.products, selectedCategories]);
 
     return (
         <div className="w-full md:w-3/4">
@@ -78,7 +84,7 @@ const ProductGrid = () => {
             </div>
 
             <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-6`}>
-                {data?.products?.map((product : Product) => (
+                {filteredProducts.map(product => (
                     <ProductCard key={product.id} product={product} viewMode={viewMode} />
                 ))}
             </div>

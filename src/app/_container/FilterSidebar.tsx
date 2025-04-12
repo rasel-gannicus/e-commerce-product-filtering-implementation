@@ -6,11 +6,14 @@ import { RatingSection } from "./Filter Components/RatingSection";
 import { FeatureSection } from "./Filter Components/FeatureSection";
 import { AvailabilitySection } from "./Filter Components/AvailabilitySction";
 import { ReleaseDateSection } from "./Filter Components/ReleaseDateSection";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from "@/Redux/app/store";
+import { toggleCategory } from "@/Redux/slices/filterSlices";
 
 const FilterSidebar: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery(undefined);
   const filters = data?.filters as FilterData;
-  console.log(filters);
+  // console.log(filters);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -74,31 +77,38 @@ interface FilterSectionProps {
   options: FilterOption[];
 }
 
-const FilterSection: React.FC<FilterSectionProps> = ({ title, options }) => (
-  <div className="border-t pt-4 mt-4">
-    <h3 className="text-lg font-semibold mb-3 flex justify-between items-center">
-      {title}
-      <button className="text-xs text-gray-500">
-        <i className="fas fa-chevron-up"></i>
-      </button>
-    </h3>
-    <div className="space-y-2">
-      {options.map((option) => (
-        <label key={option.label} className="flex items-center">
-          <input
-            type="checkbox"
-            className="form-checkbox h-4 w-4 text-blue-600"
-            defaultChecked={option.checked}
-          />
-          <span className="ml-2 text-gray-700">
-            {option.label} ({option.count})
-          </span>
-        </label>
-      ))}
-      <button className="text-sm text-blue-600 hover:underline mt-1">Show more</button>
+const FilterSection: React.FC<FilterSectionProps> = ({ title, options }) => {
+  const dispatch = useDispatch();
+  const selectedCategories = useSelector((state: RootState) => state.filter.selectedCategories);
+  console.log(options);
+
+  return (
+    <div className="border-t pt-4 mt-4">
+      <h3 className="text-lg font-semibold mb-3 flex justify-between items-center">
+        {title}
+        <button className="text-xs text-gray-500">
+          <FaChevronUp />
+        </button>
+      </h3>
+      <div className="space-y-2">
+        {options.map((option) => (
+          <label key={option.label} className="flex items-center">
+            <input
+              type="checkbox"
+              className="form-checkbox h-4 w-4 text-blue-600"
+              checked={title === 'Category' && selectedCategories.includes(option.label)}
+              onChange={() => title === 'Category' && dispatch(toggleCategory(option.label))}
+            />
+            <span className="ml-2 text-gray-700">
+              {option.label} ({option.count})
+            </span>
+          </label>
+        ))}
+        <button className="text-sm text-blue-600 hover:underline mt-1">Show more</button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Add new section components
 interface PriceRangeSectionProps {
