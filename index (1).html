@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechGear - Electronics Store</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+  <header class="bg-blue-800 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <h1 class="text-2xl font-bold">TechGear</h1>
+        </div>
+        <div class="hidden md:flex items-center space-x-4">
+          <a href="#" class="hover:text-blue-200">Home</a>
+          <a href="#" class="hover:text-blue-200">Shop</a>
+          <a href="#" class="hover:text-blue-200">Categories</a>
+          <a href="#" class="hover:text-blue-200">Deals</a>
+          <a href="#" class="hover:text-blue-200">Contact</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="hover:text-blue-200">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="hover:text-blue-200 relative">
+            <i class="fas fa-shopping-cart"></i>
+            <span
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">3</span>
+          </button>
+          <button class="hover:text-blue-200">
+            <i class="fas fa-user"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-bold mb-8">Shop Electronics</h2>
+
+    <div class="flex flex-col md:flex-row gap-6">
+      <!-- Filter Sidebar -->
+      <aside class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow-md h-fit">
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Filters
+            <button class="text-sm text-blue-600 hover:underline" id="clear-all-filters">Clear All</button>
+          </h3>
+          <div class="flex flex-wrap gap-2 mb-4" id="active-filters">
+            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+              Laptops <button class="ml-2 text-blue-800">&times;</button>
+            </span>
+            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+              $500-$1000 <button class="ml-2 text-blue-800">&times;</button>
+            </span>
+            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+              4+ Stars <button class="ml-2 text-blue-800">&times;</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="border-t pt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Category
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
+              <span class="ml-2 text-gray-700">Laptops (24)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Smartphones (56)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Tablets (18)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Audio (37)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Accessories (92)</span>
+            </label>
+            <button class="text-sm text-blue-600 hover:underline mt-1">Show more</button>
+          </div>
+        </div>
+
+        <div class="border-t pt-4 mt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Brand
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Apple (34)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Samsung (42)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Dell (19)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">HP (23)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Lenovo (27)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Sony (16)</span>
+            </label>
+            <button class="text-sm text-blue-600 hover:underline mt-1">Show more</button>
+          </div>
+        </div>
+
+        <div class="border-t pt-4 mt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Price Range
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Under $100 (45)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">$100 - $500 (78)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
+              <span class="ml-2 text-gray-700">$500 - $1000 (56)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">$1000 - $2000 (32)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Over $2000 (12)</span>
+            </label>
+          </div>
+          <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-700">Custom Range:</label>
+            <div class="flex items-center mt-2 space-x-2">
+              <input type="number" placeholder="Min"
+                class="form-input w-full rounded border-gray-300 py-1 px-2 text-sm">
+              <span>-</span>
+              <input type="number" placeholder="Max"
+                class="form-input w-full rounded border-gray-300 py-1 px-2 text-sm">
+              <button class="bg-blue-600 text-white px-2 py-1 rounded text-sm">Go</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t pt-4 mt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Rating
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" checked>
+              <span class="ml-2 flex items-center text-gray-700">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <span class="ml-1">(24)</span>
+              </span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 flex items-center text-gray-700">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-gray-300"></i>
+                <span class="ml-1 whitespace-nowrap">& Up (86)</span>
+              </span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 flex items-center text-gray-700">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-gray-300"></i>
+                <i class="fas fa-star text-gray-300"></i>
+                <span class="ml-1 whitespace-nowrap">& Up (132)</span>
+              </span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 flex items-center text-gray-700">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-gray-300"></i>
+                <i class="fas fa-star text-gray-300"></i>
+                <i class="fas fa-star text-gray-300"></i>
+                <span class="ml-1 whitespace-nowrap">& Up (187)</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="border-t pt-4 mt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Features
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Bluetooth (98)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Touchscreen (76)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Wireless Charging (45)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Water Resistant (34)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Fast Charging (67)</span>
+            </label>
+            <button class="text-sm text-blue-600 hover:underline mt-1">Show more</button>
+          </div>
+        </div>
+
+        <div class="border-t pt-4 mt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Availability
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">In Stock (143)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Out of Stock (19)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Pre-order (8)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="border-t pt-4 mt-4">
+          <h3 class="text-lg font-semibold mb-3 flex justify-between items-center">
+            Release Date
+            <button class="text-xs text-gray-500"><i class="fas fa-chevron-up"></i></button>
+          </h3>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Last 30 days (32)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Last 3 months (56)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Last 6 months (87)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600">
+              <span class="ml-2 text-gray-700">Last year (124)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-6 border-t pt-4">
+          <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+            Apply Filters
+          </button>
+        </div>
+      </aside>
+
+      <!-- Product Grid -->
+      <div class="w-full md:w-3/4">
+        <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex flex-col md:flex-row md:items-center gap-4">
+              <div>
+                <span class="text-gray-600">Showing 1-12 of 24 products</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <label class="text-gray-600 whitespace-nowrap">Sort by:</label>
+                <select class="form-select border rounded-md py-1 px-2">
+                  <option>Relevance</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Newest First</option>
+                  <option>Rating</option>
+                  <option>Popularity</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="text-gray-600">View:</label>
+              <div class="flex">
+                <button class="px-3 py-1 bg-blue-100 text-blue-800 rounded-l-md hover:bg-blue-200">
+                  <i class="fas fa-th-large"></i>
+                </button>
+                <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-r-md hover:bg-gray-200">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+              <label class="text-gray-600 ml-2">Show:</label>
+              <select class="form-select border rounded-md py-1 px-2">
+                <option>12</option>
+                <option>24</option>
+                <option>36</option>
+                <option>48</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Product Card 1 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div class="relative">
+              <span
+                class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">SALE</span>
+              <span
+                class="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">NEW</span>
+              <img src="https://placehold.co/600x400?text=Product" alt="Laptop" class="w-full h-48 object-cover" />
+              <button class="absolute right-2 bottom-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
+                <i class="fas fa-heart text-gray-400 hover:text-red-500"></i>
+              </button>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="block text-sm text-blue-600 font-medium">Dell</span>
+                  <h3 class="text-lg font-semibold mb-1">XPS 13 Plus Ultrabook</h3>
+                </div>
+                <div class="flex">
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star-half-alt"></i></span>
+                  <span class="text-xs text-gray-500 ml-1">(48)</span>
+                </div>
+              </div>
+              <div class="mb-2">
+                <span class="text-gray-500 text-sm">Intel Core i7, 16GB RAM, 512GB SSD</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <div>
+                  <span class="text-lg font-bold">$1,099.99</span>
+                  <span class="text-sm text-gray-400 line-through ml-2">$1,299.99</span>
+                </div>
+                <button class="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700">Add to
+                  Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 2 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div class="relative">
+              <img src="https://placehold.co/600x400?text=Product" alt="Smartphone" class="w-full h-48 object-cover" />
+              <button class="absolute right-2 bottom-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
+                <i class="fas fa-heart text-gray-400 hover:text-red-500"></i>
+              </button>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="block text-sm text-blue-600 font-medium">Samsung</span>
+                  <h3 class="text-lg font-semibold mb-1">Galaxy S24 Ultra</h3>
+                </div>
+                <div class="flex">
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-xs text-gray-500 ml-1">(126)</span>
+                </div>
+              </div>
+              <div class="mb-2">
+                <span class="text-gray-500 text-sm">Snapdragon 8 Gen 3, 12GB RAM, 256GB Storage</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <div>
+                  <span class="text-lg font-bold">$1,299.99</span>
+                </div>
+                <button class="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700">Add to
+                  Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 3 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div class="relative">
+              <span
+                class="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">SALE</span>
+              <img src="https://placehold.co/600x400?text=Product" alt="Tablet" class="w-full h-48 object-cover" />
+              <button class="absolute right-2 bottom-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
+                <i class="fas fa-heart text-gray-400 hover:text-red-500"></i>
+              </button>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="block text-sm text-blue-600 font-medium">Apple</span>
+                  <h3 class="text-lg font-semibold mb-1">iPad Pro 12.9"</h3>
+                </div>
+                <div class="flex">
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-gray-300"><i class="fas fa-star"></i></span>
+                  <span class="text-xs text-gray-500 ml-1">(34)</span>
+                </div>
+              </div>
+              <div class="mb-2">
+                <span class="text-gray-500 text-sm">M2 Chip, 8GB RAM, 256GB Storage</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <div>
+                  <span class="text-lg font-bold">$999.99</span>
+                  <span class="text-sm text-gray-400 line-through ml-2">$1,099.99</span>
+                </div>
+                <button class="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700">Add to
+                  Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card 4 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div class="relative">
+              <img src="https://placehold.co/600x400?text=Product" alt="Headphones" class="w-full h-48 object-cover" />
+              <button class="absolute right-2 bottom-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
+                <i class="fas fa-heart text-gray-400 hover:text-red-500"></i>
+              </button>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="block text-sm text-blue-600 font-medium">Sony</span>
+                  <h3 class="text-lg font-semibold mb-1">WH-1000XM5</h3>
+                </div>
+                <div class="flex">
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star"></i></span>
+                  <span class="text-yellow-400"><i class="fas fa-star-half-alt"></i></span>
+                  <span class="text-xs text-gray-500 ml-1">(87)</span>
+                </div>
+              </div>
+              <div class="mb-2">
+                <span class="text-gray-500 text-sm">Wireless Noise Cancelling Headphones</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <div>
+                  <span class="text-lg font-bold">$349.99</span>
+                </div>
+                <button class="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700">Add to
+                  Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</body>
