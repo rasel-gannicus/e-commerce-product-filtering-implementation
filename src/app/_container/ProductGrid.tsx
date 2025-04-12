@@ -15,16 +15,25 @@ const ProductGrid = () => {
 
     const { data: productsData } = useGetProductsQuery(undefined);
     const selectedCategories = useSelector((state: RootState) => state.filter.selectedCategories);
+     const selectedBrands = useSelector((state: RootState) => state.filter.selectedBrands);
 
     const filteredProducts = useMemo(() => {
         if (!productsData?.products) return [];
 
         let products = [...productsData.products];
+        console.log(products);
 
         // Apply category filter
         if (selectedCategories.length > 0) {
             products = products.filter(product =>
                 selectedCategories.includes(product.category)
+            );
+        }
+
+        // Apply brand filter
+        if (selectedBrands.length > 0) {
+            products = products.filter(product =>
+                selectedBrands.includes(product.brand)
             );
         }
 
@@ -51,7 +60,7 @@ const ProductGrid = () => {
         }
 
         return products;
-    }, [productsData?.products, selectedCategories, sortBy]);
+    }, [productsData?.products, selectedCategories, sortBy, selectedBrands]);
 
     // Calculate pagination values
     const totalProducts = filteredProducts.length;

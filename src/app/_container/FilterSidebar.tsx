@@ -8,7 +8,7 @@ import { AvailabilitySection } from "./Filter Components/AvailabilitySction";
 import { ReleaseDateSection } from "./Filter Components/ReleaseDateSection";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "@/Redux/app/store";
-import { toggleCategory } from "@/Redux/slices/filterSlices";
+import { toggleBrand, toggleCategory } from "@/Redux/slices/filterSlices";
 
 const FilterSidebar: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery(undefined);
@@ -80,7 +80,24 @@ interface FilterSectionProps {
 const FilterSection: React.FC<FilterSectionProps> = ({ title, options }) => {
   const dispatch = useDispatch();
   const selectedCategories = useSelector((state: RootState) => state.filter.selectedCategories);
-  console.log(options);
+  const selectedBrands = useSelector((state: RootState) => state.filter.selectedBrands);
+
+  const handleChange = (label: string) => {
+    if (title === 'Category') {
+      dispatch(toggleCategory(label));
+    } else if (title === 'Brand') {
+      dispatch(toggleBrand(label));
+    }
+  };
+
+  const isChecked = (label: string) => {
+    if (title === 'Category') {
+      return selectedCategories.includes(label);
+    } else if (title === 'Brand') {
+      return selectedBrands.includes(label);
+    }
+    return false;
+  };
 
   return (
     <div className="border-t pt-4 mt-4">
@@ -96,8 +113,8 @@ const FilterSection: React.FC<FilterSectionProps> = ({ title, options }) => {
             <input
               type="checkbox"
               className="form-checkbox h-4 w-4 text-blue-600"
-              checked={title === 'Category' && selectedCategories.includes(option.label)}
-              onChange={() => title === 'Category' && dispatch(toggleCategory(option.label))}
+              checked={isChecked(option.label)}
+              onChange={() => handleChange(option.label)}
             />
             <span className="ml-2 text-gray-700">
               {option.label} ({option.count})

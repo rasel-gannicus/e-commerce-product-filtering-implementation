@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FilterState {
   selectedCategories: string[];
+  selectedBrands: string[];
 }
 
 const initialState: FilterState = {
   selectedCategories: [],
+  selectedBrands: [],
 };
 
 const filterSlice = createSlice({
@@ -21,11 +23,17 @@ const filterSlice = createSlice({
         state.selectedCategories.splice(index, 1);
       }
     },
-    clearCategories: (state) => {
-      state.selectedCategories = [];
+    toggleBrand: (state, action: PayloadAction<string>) => {
+      const brand = action.payload;
+      const index = state.selectedBrands.indexOf(brand);
+      if (index === -1) {
+        state.selectedBrands.push(brand);
+      } else {
+        state.selectedBrands.splice(index, 1);
+      }
     },
   },
 });
 
-export const { toggleCategory, clearCategories } = filterSlice.actions;
+export const { toggleCategory, toggleBrand } = filterSlice.actions;
 export default filterSlice.reducer;
