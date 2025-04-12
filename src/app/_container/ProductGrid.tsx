@@ -1,40 +1,25 @@
 "use client";
-import { Product } from '@/utils/types';
-import ProductCard from './ProductCard';
+import { useGetProductsQuery } from '@/Redux/services/productApi';
 import { useState } from 'react';
 import { BsListUl } from 'react-icons/bs';
 import { LuGrid2X2 } from "react-icons/lu";
+import ProductCard from './ProductCard';
 
 const ProductGrid = () => {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [sortBy, setSortBy] = useState('relevance');
     const [itemsPerPage, setItemsPerPage] = useState('12');
 
-    const products: Product[] = [
-        {
-            id: '1',
-            name: 'XPS 13 Plus Ultrabook',
-            brand: 'Dell',
-            price: 1099.99,
-            oldPrice: 1299.99,
-            image: 'https://placehold.co/600x400?text=Product',
-            rating: 4.5,
-            reviews: 48,
-            specs: 'Intel Core i7, 16GB RAM, 512GB SSD',
-            sale: true,
-            new: true
-        },
-        {
-            id: '2',
-            name: 'Galaxy S24 Ultra',
-            brand: 'Samsung',
-            price: 1299.99,
-            image: 'https://placehold.co/600x400?text=Product',
-            rating: 5,
-            reviews: 126,
-            specs: 'Snapdragon 8 Gen 3, 12GB RAM, 256GB Storage'
-        },
-    ];
+    const { data, isLoading, error } = useGetProductsQuery(undefined);
+    // console.log(products);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error loading products</div>;
+    }
 
     return (
         <div className="w-full md:w-3/4">
@@ -92,7 +77,7 @@ const ProductGrid = () => {
             </div>
 
             <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-6`}>
-                {products.map(product => (
+                {data?.products?.map(product => (
                     <ProductCard key={product.id} product={product} viewMode={viewMode} />
                 ))}
             </div>

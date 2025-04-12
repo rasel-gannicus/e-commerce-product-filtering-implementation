@@ -1,10 +1,11 @@
+import ReduxProvider from "@/Redux/ReduxProvider";
 import FilterSidebar from "./_container/FilterSidebar";
 import Header from "./_container/Header";
 import ProductGrid from "./_container/ProductGrid";
 
 export default function Home() {
   return (
-    <>
+    <ReduxProvider>
       <Header />
       <main className="container mx-auto px-4 py-8">
         <h2 className="text-3xl font-bold mb-8">Shop Electronics</h2>
@@ -13,6 +14,6 @@ export default function Home() {
           <ProductGrid />
         </div>
       </main>
-    </>
+    </ReduxProvider>
   );
 }
