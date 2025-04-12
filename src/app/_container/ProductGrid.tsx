@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BsListUl } from 'react-icons/bs';
 import { LuGrid2X2 } from "react-icons/lu";
 import ProductCard from './ProductCard';
+import { Product } from '@/utils/types';
 
 const ProductGrid = () => {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -11,7 +12,7 @@ const ProductGrid = () => {
     const [itemsPerPage, setItemsPerPage] = useState('12');
 
     const { data, isLoading, error } = useGetProductsQuery(undefined);
-    // console.log(products);
+    // console.log(data);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -77,7 +78,7 @@ const ProductGrid = () => {
             </div>
 
             <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-6`}>
-                {data?.products?.map(product => (
+                {data?.products?.map((product : Product) => (
                     <ProductCard key={product.id} product={product} viewMode={viewMode} />
                 ))}
             </div>
