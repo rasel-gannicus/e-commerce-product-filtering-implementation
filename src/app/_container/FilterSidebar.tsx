@@ -2,10 +2,15 @@
 import { useGetProductsQuery } from "@/Redux/services/productApi";
 import { FilterData, CategoryFilter, BrandFilter, FilterOption, PriceRangeFilter } from "@/utils/types";
 import { FaChevronUp } from "react-icons/fa";
+import { RatingSection } from "./Filter Components/RatingSection";
+import { FeatureSection } from "./Filter Components/FeatureSection";
+import { AvailabilitySection } from "./Filter Components/AvailabilitySction";
+import { ReleaseDateSection } from "./Filter Components/ReleaseDateSection";
 
 const FilterSidebar: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery(undefined);
   const filters = data?.filters as FilterData;
+  console.log(filters);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -50,7 +55,10 @@ const FilterSidebar: React.FC = () => {
       />
 
       <PriceRangeSection ranges={filters.priceRanges} />
-
+      <RatingSection ratings={filters.ratings} />
+      <FeatureSection features={filters.features} />
+      <AvailabilitySection availability={filters.availability} />
+      <ReleaseDateSection releaseDates={filters.releaseDates} />
 
       <div className="mt-6 border-t pt-4">
         <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
