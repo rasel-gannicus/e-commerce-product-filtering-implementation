@@ -15,7 +15,9 @@ const ProductGrid = () => {
 
     const { data: productsData } = useGetProductsQuery(undefined);
     const selectedCategories = useSelector((state: RootState) => state.filter.selectedCategories);
-     const selectedBrands = useSelector((state: RootState) => state.filter.selectedBrands);
+    const selectedBrands = useSelector((state: RootState) => state.filter.selectedBrands);
+    const selectedPriceRanges = useSelector((state: RootState) => state.filter.selectedPriceRanges);
+    const selectedRatings = useSelector((state: RootState) => state.filter.selectedRatings);
 
     const filteredProducts = useMemo(() => {
         if (!productsData?.products) return [];
@@ -34,6 +36,26 @@ const ProductGrid = () => {
         if (selectedBrands.length > 0) {
             products = products.filter(product =>
                 selectedBrands.includes(product.brand)
+            );
+        }
+
+        // Apply price range filter
+        if (selectedPriceRanges.length > 0) {
+            // console.log(selectedPriceRanges);
+            products = products.filter(product => {
+                return selectedPriceRanges.some(range => {
+                    const [min, max] = range.split('-').map(price =>
+                        parseInt(price.replace(/[^0-9]/g, ''))
+                    );
+                    return product.price >= min && product.price <= max;
+                });
+            });
+        }
+
+        // Apply rating filter
+        if (selectedRatings.length > 0) {
+            products = products.filter(product =>
+                selectedRatings.some(rating => product.rating >= rating)
             );
         }
 
@@ -60,7 +82,7 @@ const ProductGrid = () => {
         }
 
         return products;
-    }, [productsData?.products, selectedCategories, sortBy, selectedBrands]);
+    }, [productsData?.products, selectedCategories, sortBy, selectedBrands, selectedPriceRanges, selectedRatings]);
 
     // Calculate pagination values
     const totalProducts = filteredProducts.length;

@@ -1,14 +1,14 @@
 "use client" ;
-import { useGetProductsQuery } from "@/Redux/services/productApi";
-import { FilterData, CategoryFilter, BrandFilter, FilterOption, PriceRangeFilter } from "@/utils/types";
-import { FaChevronUp } from "react-icons/fa";
-import { RatingSection } from "./Filter Components/RatingSection";
-import { FeatureSection } from "./Filter Components/FeatureSection";
-import { AvailabilitySection } from "./Filter Components/AvailabilitySction";
-import { ReleaseDateSection } from "./Filter Components/ReleaseDateSection";
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "@/Redux/app/store";
-import { toggleBrand, toggleCategory } from "@/Redux/slices/filterSlices";
+import { useGetProductsQuery } from "@/Redux/services/productApi";
+import { toggleBrand, toggleCategory, togglePriceRange } from "@/Redux/slices/filterSlices";
+import { FilterData, FilterOption, PriceRangeFilter } from "@/utils/types";
+import { FaChevronUp } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { AvailabilitySection } from "./Filter Components/AvailabilitySction";
+import { FeatureSection } from "./Filter Components/FeatureSection";
+import { RatingSection } from "./Filter Components/RatingSection";
+import { ReleaseDateSection } from "./Filter Components/ReleaseDateSection";
 
 const FilterSidebar: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery(undefined);
@@ -132,28 +132,35 @@ interface PriceRangeSectionProps {
   ranges: PriceRangeFilter[];
 }
 
-const PriceRangeSection: React.FC<PriceRangeSectionProps> = ({ ranges }) => (
-  <div className="border-t pt-4 mt-4">
-    <h3 className="text-lg font-semibold mb-3 flex justify-between items-center">
-      Price Range
-      <button className="text-xs text-gray-500">
-        <FaChevronUp />
-      </button>
-    </h3>
-    <div className="space-y-2">
-      {ranges.map((range) => (
-        <label key={range.range} className="flex items-center">
-          <input
-            type="checkbox"
-            className="form-checkbox h-4 w-4 text-blue-600"
-          />
-          <span className="ml-2 text-gray-700">
-            {range.range} ({range.count})
-          </span>
-        </label>
-      ))}
+const PriceRangeSection: React.FC<PriceRangeSectionProps> = ({ ranges }) => {
+  const dispatch = useDispatch();
+  const selectedPriceRanges = useSelector((state: RootState) => state.filter.selectedPriceRanges);
+
+  return (
+    <div className="border-t pt-4 mt-4">
+      <h3 className="text-lg font-semibold mb-3 flex justify-between items-center">
+        Price Range
+        <button className="text-xs text-gray-500">
+          <FaChevronUp />
+        </button>
+      </h3>
+      <div className="space-y-2">
+        {ranges.map((range) => (
+          <label key={range.range} className="flex items-center">
+            <input
+              type="checkbox"
+              className="form-checkbox h-4 w-4 text-blue-600"
+              checked={selectedPriceRanges.includes(range.range)}
+              onChange={() => dispatch(togglePriceRange(range.range))}
+            />
+            <span className="ml-2 text-gray-700">
+              {range.range} ({range.count})
+            </span>
+          </label>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default FilterSidebar;
