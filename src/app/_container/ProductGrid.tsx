@@ -18,6 +18,8 @@ const ProductGrid = () => {
     const selectedBrands = useSelector((state: RootState) => state.filter.selectedBrands);
     const selectedPriceRanges = useSelector((state: RootState) => state.filter.selectedPriceRanges);
     const selectedRatings = useSelector((state: RootState) => state.filter.selectedRatings);
+    const selectedFeatures = useSelector((state: RootState) => state.filter.selectedFeatures);
+    const selectedAvailability = useSelector((state: RootState) => state.filter.selectedAvailability);
 
     const filteredProducts = useMemo(() => {
         if (!productsData?.products) return [];
@@ -52,11 +54,16 @@ const ProductGrid = () => {
             });
         }
 
-        // Apply rating filter
         if (selectedRatings.length > 0) {
-            products = products.filter(product =>
-                selectedRatings.some(rating => product.rating >= rating)
-            );
+            products = products.filter(product => {
+                return selectedRatings.some(rating => {
+                    // For each selected rating, define a range
+                    const minRating = rating - 0.5;
+                    const maxRating = rating + 0.4;
+                    // Check if product rating falls within this range
+                    return product.rating >= minRating && product.rating <= maxRating;
+                });
+            });
         }
 
         // Apply sorting
@@ -81,8 +88,22 @@ const ProductGrid = () => {
                 break;
         }
 
+        // Apply features filter
+        if (selectedFeatures.length > 0) {
+            products = products.filter(product =>
+                selectedFeatures.some(feature => product.features.includes(feature))
+            );
+        }
+
+        // Apply availability filter
+        if (selectedAvailability.length > 0) {
+            products = products.filter(product =>
+                selectedAvailability.includes(product.availability)
+            );
+        }
+
         return products;
-    }, [productsData?.products, selectedCategories, sortBy, selectedBrands, selectedPriceRanges, selectedRatings]);
+    }, [productsData?.products, selectedCategories, selectedBrands, selectedPriceRanges, selectedRatings, selectedFeatures, selectedAvailability, sortBy]);
 
     // Calculate pagination values
     const totalProducts = filteredProducts.length;

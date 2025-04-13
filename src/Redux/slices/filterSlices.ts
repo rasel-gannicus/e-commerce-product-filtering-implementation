@@ -1,18 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FilterState {
-    selectedCategories: string[];
-    selectedBrands: string[];
-    selectedPriceRanges: string[];
-    selectedRatings: number[];
-  }
+  selectedCategories: string[];
+  selectedBrands: string[];
+  selectedPriceRanges: string[];
+  selectedRatings: number[];
+  selectedFeatures: string[];
+  selectedAvailability: string[];
+}
 
-  const initialState: FilterState = {
-    selectedCategories: [],
-    selectedBrands: [],
-    selectedPriceRanges: [],
-    selectedRatings: [],
-  };
+const initialState: FilterState = {
+  selectedCategories: [],
+  selectedBrands: [],
+  selectedPriceRanges: [],
+  selectedRatings: [],
+  selectedFeatures: [],
+  selectedAvailability: [],
+};
 
 const filterSlice = createSlice({
   name: 'filter',
@@ -46,7 +50,6 @@ const filterSlice = createSlice({
         }
       },
       toggleRating: (state, action: PayloadAction<number>) => {
-        console.log('triggered');
         const rating = action.payload;
         const index = state.selectedRatings.indexOf(rating);
         if (index === -1) {
@@ -55,8 +58,33 @@ const filterSlice = createSlice({
           state.selectedRatings.splice(index, 1);
         }
       },
+    toggleFeature: (state, action: PayloadAction<string>) => {
+      const feature = action.payload;
+      const index = state.selectedFeatures.indexOf(feature);
+      if (index === -1) {
+        state.selectedFeatures.push(feature);
+      } else {
+        state.selectedFeatures.splice(index, 1);
+      }
+    },
+    toggleAvailability: (state, action: PayloadAction<string>) => {
+      const availability = action.payload;
+      const index = state.selectedAvailability.indexOf(availability);
+      if (index === -1) {
+        state.selectedAvailability.push(availability);
+      } else {
+        state.selectedAvailability.splice(index, 1);
+      }
+    },
   },
 });
 
-export const { toggleCategory, toggleBrand, togglePriceRange, toggleRating } = filterSlice.actions;
+export const { 
+  toggleCategory, 
+  toggleBrand, 
+  togglePriceRange, 
+  toggleRating,
+  toggleFeature,
+  toggleAvailability 
+} = filterSlice.actions;
 export default filterSlice.reducer;
