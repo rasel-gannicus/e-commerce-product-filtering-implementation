@@ -14,18 +14,20 @@ const ProductGrid = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const { data: productsData } = useGetProductsQuery(undefined);
+
+    console.log(productsData?.products);
     const selectedCategories = useSelector((state: RootState) => state.filter.selectedCategories);
     const selectedBrands = useSelector((state: RootState) => state.filter.selectedBrands);
     const selectedPriceRanges = useSelector((state: RootState) => state.filter.selectedPriceRanges);
     const selectedRatings = useSelector((state: RootState) => state.filter.selectedRatings);
     const selectedFeatures = useSelector((state: RootState) => state.filter.selectedFeatures);
     const selectedAvailability = useSelector((state: RootState) => state.filter.selectedAvailability);
+    const selectedReleaseDates = useSelector((state: RootState) => state.filter.selectedReleaseDates);
 
     const filteredProducts = useMemo(() => {
         if (!productsData?.products) return [];
 
         let products = [...productsData.products];
-        console.log(products);
 
         // Apply category filter
         if (selectedCategories.length > 0) {
@@ -102,9 +104,40 @@ const ProductGrid = () => {
             );
         }
 
-        return products;
-    }, [productsData?.products, selectedCategories, selectedBrands, selectedPriceRanges, selectedRatings, selectedFeatures, selectedAvailability, sortBy]);
+        // Apply release date filter
+        if (selectedReleaseDates.length > 0) {
+            products = products.filter(product => {
+                const productDate = new Date(product.releaseDate);
+                return selectedReleaseDates.some(datePeriod => {
+                    // Handle different date periods
+                    switch(datePeriod) {
+                        case 'Last 30 days':
+                            console.log('triggered');
 
+                            const thirtyDaysAgo = new Date();
+                            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                            return productDate >= thirtyDaysAgo;
+                        case 'Last 3 months':
+                            const ninetyDaysAgo = new Date();
+                            ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+                            return productDate >= ninetyDaysAgo;
+                        case 'Last 6 months':
+                            const sixMonthsAgo = new Date();
+                            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                            return productDate >= sixMonthsAgo;
+                        case 'Last year':
+                            const oneYearAgo = new Date();
+                            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+                            return productDate >= oneYearAgo;
+                        default:
+                            return false;
+                    }
+                });
+            });
+        }
+
+        return products;
+    }, [productsData?.products, selectedCategories, selectedBrands, selectedPriceRanges, selectedRatings, selectedFeatures, selectedAvailability, selectedReleaseDates, sortBy]);
     // Calculate pagination values
     const totalProducts = filteredProducts.length;
     const itemsPerPageNumber = parseInt(itemsPerPage);

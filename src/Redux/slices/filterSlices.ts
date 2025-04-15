@@ -7,6 +7,7 @@ interface FilterState {
   selectedRatings: number[];
   selectedFeatures: string[];
   selectedAvailability: string[];
+  selectedReleaseDates: string[];
 }
 
 const initialState: FilterState = {
@@ -16,6 +17,7 @@ const initialState: FilterState = {
   selectedRatings: [],
   selectedFeatures: [],
   selectedAvailability: [],
+  selectedReleaseDates: [],
 };
 
 const filterSlice = createSlice({
@@ -76,6 +78,15 @@ const filterSlice = createSlice({
         state.selectedAvailability.splice(index, 1);
       }
     },
+    toggleReleaseDate: (state, action: PayloadAction<string>) => {
+      const date = action.payload;
+      const index = state.selectedReleaseDates.indexOf(date);
+      if (index === -1) {
+        state.selectedReleaseDates.push(date);
+      } else {
+        state.selectedReleaseDates.splice(index, 1);
+      }
+    },
   },
 });
 
@@ -85,6 +96,7 @@ export const {
   togglePriceRange, 
   toggleRating,
   toggleFeature,
-  toggleAvailability 
+  toggleAvailability, 
+  toggleReleaseDate 
 } = filterSlice.actions;
 export default filterSlice.reducer;
