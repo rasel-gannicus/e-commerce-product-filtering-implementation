@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
                 )}
               </span>
             ))}
-            <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+            <span className="text-xs text-gray-500 ml-1">({product?.reviewCount})</span>
           </div>
         </div>
         <div className="mb-2">
