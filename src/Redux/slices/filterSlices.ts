@@ -87,7 +87,42 @@ const filterSlice = createSlice({
         state.selectedReleaseDates.splice(index, 1);
       }
     },
-  },
+    removeFilter: (state, action: PayloadAction<{ type: string; value: string }>) => {
+      const { type, value } = action.payload;
+      switch (type) {
+        case 'category':
+          state.selectedCategories = state.selectedCategories.filter(cat => cat !== value);
+          break;
+        case 'brand':
+          state.selectedBrands = state.selectedBrands.filter(brand => brand !== value);
+          break;
+        case 'price':
+          state.selectedPriceRanges = state.selectedPriceRanges.filter(range => range !== value);
+          break;
+        case 'rating':
+          state.selectedRatings = state.selectedRatings.filter(rating => `${rating} Stars` !== value);
+          break;
+        case 'feature':
+          state.selectedFeatures = state.selectedFeatures.filter(feature => feature !== value);
+          break;
+        case 'availability':
+          state.selectedAvailability = state.selectedAvailability.filter(status => status !== value);
+          break;
+        case 'date':
+          state.selectedReleaseDates = state.selectedReleaseDates.filter(date => date !== value);
+          break;
+      }
+    },
+    clearAllFilters: (state) => {
+      state.selectedCategories = [];
+      state.selectedBrands = [];
+      state.selectedPriceRanges = [];
+      state.selectedRatings = [];
+      state.selectedFeatures = [];
+      state.selectedAvailability = [];
+      state.selectedReleaseDates = [];
+    },
+  }
 });
 
 export const { 
@@ -97,6 +132,8 @@ export const {
   toggleRating,
   toggleFeature,
   toggleAvailability, 
-  toggleReleaseDate 
+  toggleReleaseDate,
+  removeFilter,
+  clearAllFilters
 } = filterSlice.actions;
 export default filterSlice.reducer;

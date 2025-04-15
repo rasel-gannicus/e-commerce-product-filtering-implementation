@@ -1,4 +1,4 @@
-"use client" ;
+"use client";
 import { RootState } from "@/Redux/app/store";
 import { useGetProductsQuery } from "@/Redux/services/productApi";
 import { toggleBrand, toggleCategory, togglePriceRange } from "@/Redux/slices/filterSlices";
@@ -9,6 +9,7 @@ import { AvailabilitySection } from "./Filter Components/AvailabilitySction";
 import { FeatureSection } from "./Filter Components/FeatureSection";
 import { RatingSection } from "./Filter Components/RatingSection";
 import { ReleaseDateSection } from "./Filter Components/ReleaseDateSection";
+import { ActiveFilters } from "./Filter Components/ActiveFilters";
 
 const FilterSidebar: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery(undefined);
@@ -25,36 +26,23 @@ const FilterSidebar: React.FC = () => {
 
   return (
     <aside className="w-full md:w-1/4 bg-white p-6 rounded-lg shadow-md h-fit">
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-3 flex justify-between items-center">
-          Filters
-          <button className="text-sm text-blue-600 hover:underline" id="clear-all-filters">
-            Clear All
-          </button>
-        </h3>
-        <div className="flex flex-wrap gap-2 mb-4" id="active-filters">
-          {['Laptops', '$500-$1000', '4+ Stars'].map((filter) => (
-            <span key={filter} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
-              {filter} <button className="ml-2 text-blue-800">&times;</button>
-            </span>
-          ))}
-        </div>
-      </div>
+      
+      <ActiveFilters />
 
-      <FilterSection 
-        title="Category" 
+      <FilterSection
+        title="Category"
         options={filters.categories.map(cat => ({
           label: cat.name,
           count: cat.count
-        }))} 
+        }))}
       />
-      
-      <FilterSection 
-        title="Brand" 
+
+      <FilterSection
+        title="Brand"
         options={filters.brands.map(brand => ({
           label: brand.name,
           count: brand.count
-        }))} 
+        }))}
       />
 
       <PriceRangeSection ranges={filters.priceRanges} />
