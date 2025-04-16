@@ -1,6 +1,7 @@
 import { FaCartShopping } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
+import { CartIcon } from "@/Components/CartIcon";
 
 
 export default function Header() {
@@ -22,12 +23,7 @@ export default function Header() {
             <button className="hover:text-blue-200">
               <FaSearch size={23} />
             </button>
-            <button className="hover:text-blue-200 relative">
-              <FaCartShopping size={23} />
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
-                3
-              </span>
-            </button>
+            <CartIcon />
             <button className="hover:text-blue-200">
               <FaUser size={23} />
             </button>

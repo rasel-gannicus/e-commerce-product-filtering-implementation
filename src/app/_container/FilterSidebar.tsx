@@ -26,7 +26,7 @@ const FilterSidebar: React.FC = () => {
 
   return (
     <aside className="w-full md:w-1/4 bg-white p-6 rounded-lg shadow-md h-fit">
-      
+
       <ActiveFilters />
 
       <FilterSection
