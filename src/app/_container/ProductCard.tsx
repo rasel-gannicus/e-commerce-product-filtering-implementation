@@ -7,6 +7,7 @@ import { addToCart } from '@/Redux/slices/cartSlice';
 import { RootState } from '@/Redux/app/store';
 import { toast } from 'react-hot-toast';
 import Image from "next/image";
+import { toggleWishlist } from "@/Redux/slices/wishlistSlice";
 
 const ProductCard = ({ product, viewMode }: { product: Product, viewMode: 'grid' | 'list' }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,21 @@ const ProductCard = ({ product, viewMode }: { product: Product, viewMode: 'grid'
   };
 
   const isInCart = cartItems.some(item => item.id === product.id);
+
+  const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
+
+  const isInWishlist = wishlistItems.some(item => item.id === product.id);
+
+  const handleWishlistToggle = () => {
+    const wishlistItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    };
+    dispatch(toggleWishlist(wishlistItem));
+    toast.success(isInWishlist ? 'Removed from wishlist' : 'Added to wishlist');
+  };
 
   return (
     <div className={`bg-white rounded-lg shadow-md ${viewMode === 'grid' ? '' : 'flex'}`}>
@@ -47,8 +63,14 @@ const ProductCard = ({ product, viewMode }: { product: Product, viewMode: 'grid'
           className="w-full h-48 object-cover"
           priority
         />
-        <button className="absolute right-2 bottom-2 bg-white rounded-full p-2 shadow hover:bg-gray-100">
-          <FaHeart color="#98A1AE" />
+        <button
+          className="absolute right-2 bottom-2 bg-white rounded-full p-2 shadow hover:bg-gray-100 cursor-pointer"
+          onClick={handleWishlistToggle}
+        >
+          <FaHeart
+            className={`transition-colors duration-200 ${isInWishlist ? 'text-red-500' : 'text-gray-400'
+              }`}
+          />
         </button>
       </div>
       <div className={`p-4 ${viewMode === 'list' ? 'w-2/3' : ''}`}>
