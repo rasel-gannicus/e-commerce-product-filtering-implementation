@@ -1,7 +1,5 @@
-import { FaCartShopping } from "react-icons/fa6";
-import { FaSearch } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { CartIcon } from "@/Components/CartIcon";
+import { FaSearch, FaUser } from "react-icons/fa";
 
 
 export default function Header() {
